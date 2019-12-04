@@ -3,8 +3,8 @@
 namespace App\Http\Action\Blog;
 
 use Psr\Http\Message\ServerRequestInterface;
-//use Zend\Diactoros\Response\HtmlResponse;
-//use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Description of ShowAction

@@ -9,9 +9,9 @@ use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\RouteCollection;
 use Framework\Http\Router\SimpleRouter;
 
-use Framework\Http\Message\Factory\Psr17Factory;
-use Framework\Http\Message\Psr7Server\ServerRequestCreator;
-use Framework\Http\Message\Response;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+use Zend\Diactoros\ServerRequestFactory;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
@@ -30,18 +30,10 @@ $router = new SimpleRouter($routes);
 $resolver = new ActionResolver();
 
 ### Running
-$psr17Factory = new Psr17Factory();
+$request = ServerRequestFactory::fromGlobals();
 
-$creator = new ServerRequestCreator(
-    $psr17Factory, // ServerRequestFactory
-    $psr17Factory, // UriFactory
-    $psr17Factory, // UploadedFileFactory
-    $psr17Factory  // StreamFactory
-);
-
-$request = $creator->fromGlobals();
-
-try {    
+try {       
+    
     $result = $router->match($request);
     
     foreach ($result->getAttributes() as $attribute => $value) {
@@ -51,15 +43,12 @@ try {
     
     $response = $action($request);
 } catch (RequestNotMatchedException $e){
-    $response = new Response('Undefined page', 404);
+    $response = new HtmlResponse('Undefined page', 404);
 }
 
 ## Postprocessing
 $response = $response->withHeader('X-Developer', 'AlexRingo');
     
 ### Sending
-header('HTTP/1.0 ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
-foreach ($response->getHeaders() as $name => $values) {
-    header($name . ':' . implode(', ', $values));
-}
-echo $response->getBody();
+$emitter = new SapiEmitter();
+$emitter->emit($response);

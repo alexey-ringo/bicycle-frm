@@ -3,7 +3,7 @@
 namespace App\Http\Action;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Http\Message\Response;
+use Zend\Diactoros\Response\HtmlResponse;
 
 /**
  * Description of HelloAction
@@ -13,6 +13,6 @@ use Framework\Http\Message\Response;
 class HelloAction {
     public function __invoke(ServerRequestInterface $request) {
         $name = $request->getQueryParams()['name'] ?? 'Guest';
-        return new Response('Hello, ' . $name . '!');
+        return new HtmlResponse('Hello, ' . $name . '!');
     }
 }

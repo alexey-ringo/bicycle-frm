@@ -2,7 +2,7 @@
 
 namespace App\Http\Action\Blog;
 
-//use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Description of IndexAction
