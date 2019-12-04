@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Framework\Http;
+namespace Tests\Framework\Http\Message;
 
-use Framework\Http\Request;
-use Framework\Http\RequestFactory;
+use Framework\Http\Message\Request;
+use Framework\Http\Message\RequestFactory;
 use PHPUnit\Framework\TestCase;
 
 class RequestFactoryTest extends TestCase

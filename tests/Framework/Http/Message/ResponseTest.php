@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Framework\Http;
+namespace Tests\Framework\Http\Message;
 
-use Framework\Http\Response;
+use Framework\Http\Message\Response;
 use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
